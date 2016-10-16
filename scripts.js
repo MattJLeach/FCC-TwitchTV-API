@@ -25,7 +25,7 @@ $(function() {
 			$('#output').append('<div class="channelPanel">' + 
 				'<img src="' + data.logo + '">' +
 				'<div class="channelName">' + data.display_name + '</div>' +
-				'<div class="channelStatus">' + data.status + '</div></div>');
+				'<div class="channelStatus">' + data.status + '</div></div><hr />');
 		});
 	}
 
