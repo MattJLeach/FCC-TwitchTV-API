@@ -1,0 +1,25 @@
+body {
+	background: #f26722;
+}
+
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+	background: #eee;
+}
+
+.headarea {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.channelPanel {
+	overflow: hidden;
+	padding: 5px;
+}
+
+img {
+	float: left;
+	width: 100px;
+	border-radius: 50px;
+}
