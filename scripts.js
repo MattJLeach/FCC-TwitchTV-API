@@ -2,9 +2,9 @@
 var channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
 
 // Function for making AJAX call
-function getDetails(channel, callback) {
+function getDetails(type, channel, callback) {
 	$.ajax({
-		url: 'https://wind-bow.hyperdev.space/twitch-api/channels/' + channel,
+		url: 'https://wind-bow.hyperdev.space/twitch-api/' + type + '/' + channel,
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data) {
@@ -20,13 +20,33 @@ $(function() {
 
 	// On load run the AJAX function for each channel in the array
 	for( var i = 0; i < channels.length; i++ ) {
-		getDetails(channels[i], function(data) {
-			// Append channel details to #output
-			$('#output').append('<div class="channelPanel">' + 
-				'<img src="' + data.logo + '">' +
-				'<div class="channelName">' + data.display_name + '</div>' +
-				'<div class="channelStatus">' + data.status + '</div></div><hr />');
-		});
-	}
 
+		// Setup blank variables
+		var logo, name, stream, status;
+
+		// Make first AJAX call for channel details
+		getDetails('channels', channels[i], function(data) {
+			// set channel variables
+			logo = data.logo;
+			name = data.display_name;
+		
+			// Make second AJAX call for stram details
+			getDetails('streams', channels[i], function(data) {
+				// set stream variables
+				if(data.stream === null || data.stream === undefined) {
+					stream = 'Offline',
+					status = 'offline'
+				} else {
+					stream = data.game,
+					status = 'online'
+				}
+
+				$('#output').append('<div class="channelPanel">' + 
+					'<img src="' + logo + '">' +
+					'<div class="channelName">' + name + '</div>' +
+					'<div class="channelStatus">' + status + '</div></div><hr />');
+				});		
+			});
+
+	}
 });
